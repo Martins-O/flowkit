@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "Flowkit",
+    "slug": "flowkit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f0f13"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.flowkit.mobile",
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch", "processing"]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0f0f13"
+      },
+      "package": "app.flowkit.mobile"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#7F77DD"
+        }
+      ],
+      "expo-background-fetch"
+    ],
+    "scheme": "flowkit",
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    }
+  }
+}
