@@ -215,21 +215,6 @@ export default defineBackground(() => {
             break;
           }
 
-          case 'flowkit-activity': {
-            // Store distraction events for analytics (V2)
-            // For now just log to console in dev mode
-            if (process.env['NODE_ENV'] === 'development') {
-              const m = message as {
-                type: string;
-                event: { type: string };
-                url: string;
-              };
-              console.debug('[Flowkit] Activity event:', m.event.type, m.url);
-            }
-            sendResponse({ ok: true });
-            break;
-          }
-
           default:
             sendResponse(null);
         }
@@ -251,18 +236,6 @@ export default defineBackground(() => {
       } else {
         notify('Break over!', 'Ready to focus again?');
       }
-    }
-
-    // Badge text — show remaining minutes while running
-    if (newState.status === 'running' || newState.status === 'overflow') {
-      const mins = Math.ceil(Math.abs(newState.remaining) / 60);
-      const text = newState.status === 'overflow' ? `+${mins}` : String(mins);
-      chrome.action.setBadgeText({ text });
-      chrome.action.setBadgeBackgroundColor({
-        color: newState.type === 'focus' ? '#7F77DD' : '#1D9E75',
-      });
-    } else {
-      chrome.action.setBadgeText({ text: '' });
     }
   });
 
