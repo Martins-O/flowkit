@@ -1,7 +1,7 @@
 import { createClient, createEndpoints } from '@flowkit/api-client';
 
-const env = (typeof import.meta !== 'undefined' && (import.meta as { env?: { VITE_API_URL?: string } }).env) || {};
-const BASE_URL = env.VITE_API_URL || 'http://localhost:3000/api/v1';
+// Default API URL — overridden by VITE_API_URL at build time via define
+const BASE_URL = typeof __VITE_API_URL__ !== 'undefined' ? __VITE_API_URL__ : 'http://localhost:3000/api/v1';
 
 async function getToken(): Promise<string | null> {
   const result = await chrome.storage.local.get('flowkit-store');

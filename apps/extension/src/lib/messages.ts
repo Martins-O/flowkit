@@ -20,5 +20,14 @@ export interface LoggedSession {
 }
 
 export function sendMessage(message: ExtensionMessage): Promise<unknown> {
-  return chrome.runtime.sendMessage(message) as Promise<unknown>;
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage(message, (response) => {
+      if (chrome.runtime.lastError) {
+        console.error('[Flowkit] Message error:', chrome.runtime.lastError);
+        resolve(null);
+        return;
+      }
+      resolve(response);
+    });
+  });
 }

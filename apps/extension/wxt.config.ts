@@ -2,6 +2,11 @@ import { defineConfig } from 'wxt';
 
 export default defineConfig({
   extensionApi: 'chrome',
+  vite: () => ({
+    define: {
+      __VITE_API_URL__: JSON.stringify(process.env['VITE_API_URL'] || 'http://localhost:3000/api/v1'),
+    },
+  }),
   manifest: {
     name: 'Flowkit',
     description: 'Focus intelligence for developers and power users.',
