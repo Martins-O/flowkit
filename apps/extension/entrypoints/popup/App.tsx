@@ -7,14 +7,21 @@ import { SessionControls } from '../../src/components/SessionControls.js';
 import { TaskSelector } from '../../src/components/TaskSelector.js';
 import { AuthForm } from '../../src/components/AuthForm.js';
 import { Header } from '../../src/components/Header.js';
+import { createAsyncClient } from '../../src/lib/apiClient.js';
 import { DEFAULT_SETTINGS } from '@flowkit/types';
 
 export default function App() {
   const { accessToken, loading: authLoading, login, logout } = useAuth();
   const { state, start, pause, resume, stop, overflow, skipBreak } = useTimerState();
-  const { tasks } = useTasks(accessToken);
+  const { tasks, setTasks } = useTasks(accessToken);
   const [view, setView] = useState<'timer' | 'tasks'>('timer');
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+
+  async function handleCreateTask(title: string) {
+    const api = await createAsyncClient();
+    const task = await api.tasks.create({ title, estimatedPomodoros: 1 });
+    setTasks((prev) => [task, ...prev]);
+  }
 
   if (authLoading) {
     return (
@@ -56,6 +63,7 @@ export default function App() {
             setView('timer');
           }}
           onClose={() => setView('timer')}
+          onCreateTask={handleCreateTask}
         />
       </div>
     );

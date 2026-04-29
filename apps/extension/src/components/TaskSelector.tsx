@@ -6,14 +6,32 @@ interface Props {
   selectedTaskId: string | null;
   onSelect: (taskId: string | null) => void;
   onClose: () => void;
+  onCreateTask: (title: string) => Promise<void>;
 }
 
-export function TaskSelector({ tasks, selectedTaskId, onSelect, onClose }: Props) {
+export function TaskSelector({ tasks, selectedTaskId, onSelect, onClose, onCreateTask }: Props) {
   const [search, setSearch] = useState('');
+  const [showCreate, setShowCreate] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  const [creating, setCreating] = useState(false);
 
   const filtered = tasks.filter((t) =>
     t.title.toLowerCase().includes(search.toLowerCase()),
   );
+
+  async function handleCreate() {
+    if (!newTitle.trim()) return;
+    setCreating(true);
+    try {
+      await onCreateTask(newTitle.trim());
+      setNewTitle('');
+      setShowCreate(false);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setCreating(false);
+    }
+  }
 
   return (
     <div className="flex flex-col h-full bg-[#0f0f13]">
@@ -28,16 +46,22 @@ export function TaskSelector({ tasks, selectedTaskId, onSelect, onClose }: Props
         </button>
       </div>
 
-      {/* Search */}
-      <div className="px-4 py-2">
+      {/* Search + New */}
+      <div className="px-4 py-2 flex gap-2">
         <input
           type="text"
           placeholder="Search tasks..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-200 placeholder-gray-600 outline-none focus:border-brand-400"
+          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-200 placeholder-gray-600 outline-none focus:border-brand-400"
           autoFocus
         />
+        <button
+          onClick={() => setShowCreate(true)}
+          className="px-3 py-2 bg-brand-600 hover:bg-brand-500 text-white text-sm rounded-xl transition-colors"
+        >
+          + New
+        </button>
       </div>
 
       {/* No task option */}
@@ -53,6 +77,36 @@ export function TaskSelector({ tasks, selectedTaskId, onSelect, onClose }: Props
           No task
         </button>
       </div>
+
+      {/* Create form */}
+      {showCreate && (
+        <div className="px-4 py-2 border-b border-white/10">
+          <input
+            type="text"
+            placeholder="Task title..."
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-gray-200 placeholder-gray-600 outline-none focus:border-brand-400"
+            autoFocus
+          />
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={handleCreate}
+              disabled={creating || !newTitle.trim()}
+              className="flex-1 bg-brand-600 hover:bg-brand-500 disabled:opacity-40 text-white text-sm py-2 rounded-xl transition-colors"
+            >
+              {creating ? 'Saving...' : 'Save'}
+            </button>
+            <button
+              onClick={() => { setShowCreate(false); setNewTitle(''); }}
+              className="px-3 py-2 text-gray-400 hover:text-gray-200 text-sm transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Task list */}
       <div className="flex-1 overflow-y-auto px-4 py-1 space-y-1">
