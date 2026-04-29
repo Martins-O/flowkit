@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-import { TimerRing } from '../../src/components/TimerRing.js';
-import { timerService } from '../../src/lib/timerService.js';
-import { useTimerStore } from '../../src/store/timerStore.js';
-import { getApiClient } from '../../src/lib/apiClient.js';
+import { TimerRing } from '@/components/TimerRing.js';
+import { timerService } from '@/lib/timerService.js';
+import { useTimerStore } from '@/store/timerStore.js';
+import { getApiClient } from '@/lib/apiClient.js';
 import type { TimerState, Task } from '@flowkit/types';
 import { DEFAULT_SETTINGS } from '@flowkit/types';
 

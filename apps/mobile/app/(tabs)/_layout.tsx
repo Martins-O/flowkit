@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, router } from 'expo-router';
 import { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { useTimerStore } from '../../src/store/timerStore.js';
+import { useTimerStore } from '@/store/timerStore.js';
 
 export default function TabsLayout() {
   const accessToken = useTimerStore((s) => s.accessToken);

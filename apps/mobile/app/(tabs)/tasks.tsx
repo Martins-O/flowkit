@@ -12,8 +12,8 @@ import {
   Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { getApiClient } from '../../src/lib/apiClient.js';
-import { useTimerStore } from '../../src/store/timerStore.js';
+import { getApiClient } from '@/lib/apiClient.js';
+import { useTimerStore } from '@/store/timerStore.js';
 import type { Task } from '@flowkit/types';
 
 export default function TasksScreen() {

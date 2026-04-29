@@ -9,10 +9,10 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BarChart } from '../../src/components/BarChart.js';
-import { StatCard } from '../../src/components/StatCard.js';
-import { getApiClient } from '../../src/lib/apiClient.js';
-import { useTimerStore } from '../../src/store/timerStore.js';
+import { BarChart } from '@/components/BarChart.js';
+import { StatCard } from '@/components/StatCard.js';
+import { getApiClient } from '@/lib/apiClient.js';
+import { useTimerStore } from '@/store/timerStore.js';
 
 interface DailyCount {
   date: string;
