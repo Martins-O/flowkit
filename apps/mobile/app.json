@@ -15,7 +15,10 @@
       "supportsTablet": false,
       "bundleIdentifier": "app.flowkit.mobile",
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "processing"]
+        "UIBackgroundModes": [
+          "fetch",
+          "processing"
+        ]
       }
     },
     "android": {
@@ -34,7 +37,8 @@
           "color": "#7F77DD"
         }
       ],
-      "expo-background-fetch"
+      "expo-background-fetch",
+      "expo-font"
     ],
     "scheme": "flowkit",
     "extra": {

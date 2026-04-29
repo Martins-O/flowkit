@@ -44,3 +44,6 @@ coverage/
 # Misc
 *.tgz
 .npmrc.tmp
+
+# Expo
+.expo/
